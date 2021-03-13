@@ -25,3 +25,9 @@ fetch("https://test1-api.rescuegroups.org/v5/2p3gpOLU")
   .then(function (data) {
     console.log(data);
   });
+
+var getPetProfiles = function() {
+    console.log("function was called");
+};
+
+getPetProfiles();
