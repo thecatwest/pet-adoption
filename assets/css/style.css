@@ -77,3 +77,48 @@ h2 {
     display: none;
 }
 /* End of Dropdown CSS*/
+:root {
+ --primary : #45d678;
+ --secondary: #aea39c;
+ --tertiary:hsl(180, 68%, 56%);
+
+}
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: var(---primary);
+    margin: 0   ;
+    padding: 0;
+    font: 16px;
+}
+.navbar{
+    background-color: #d3e4e4;
+    padding: 0%;
+    flex-wrap: wrap;
+
+}
+.navbar-item{
+    text-align: left;
+    text-decoration: aquamarine;
+    padding: left 0; ;
+}
+.img{
+    height: 90;
+    width: 120;
+}
+.navbar-dropdown{
+    width: 100%;
+}
+.container{
+    padding: auto;
+}
+ input{
+     outline: none;
+     border:none ;
+     padding: 12px;;
+     width: 100%;
+     font-size: 2.2rem;
+     border: 2px solid var(--grey);
+     border-radius: 12px;
+ }
