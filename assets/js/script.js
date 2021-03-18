@@ -1,13 +1,7 @@
-$(document).ready(function() {
-  // listen for click events on navbar
-  $(".navbar-burger").click(function() {
-    $(".navbar-burger").toggleClass("is-active");
-    $(".navbar-menu").toggleClass("is-active");
-  });
+$(document).ready(function () {
 
-  $("#submit").on("click", function() {
-
-    var searchAnimalsUrl = 
+  $("#submit").on("click", function () {
+    var searchAnimalsUrl =
       "https://api.rescuegroups.org/v5/public/animals/search/available/haspic?include=locations,orgs";
 
     $.ajax({
@@ -15,30 +9,30 @@ $(document).ready(function() {
       method: "GET",
       contentType: "application/json",
       headers: {
-        Authorization: "2p3gpOLU"
+        Authorization: "2p3gpOLU",
       },
       data: JSON.stringify({
         data: {
           filters: [
             {
-              fieldName: "statuses.name",
-              operation: "equals",
-              criteria: "Available"
-            },
-            {
               fieldName: "species.singular",
               operation: "equals",
-              criteria: $("#species option:selected")
+              criteria: $("#species option:selected"),
+            },
+            {
+              fieldName: "statuses.name",
+              operation: "equals",
+              criteria: "Available",
             },
           ],
           filterRadius: {
             miles: $("#distance option:selected").val(),
-            postalcode: $("#zipCode").val().trim(),
+            postalcode: $("#postal-code").val().trim(),
           },
         },
       }),
-    }).then(function(result) {
-      console.log(result);
+    }).then(function (responseAnimal) {
+      console.log(responseAnimal);
 
       var orgSearchUrl = "https://api.rescuegroups.org/v5/public/orgs/search/";
 
@@ -47,7 +41,7 @@ $(document).ready(function() {
         method: "GET",
         contentType: "application/json",
         headers: {
-          Authorization: "2p3gpOLU"
+          Authorization: "2p3gpOLU",
         },
         data: JSON.stringify({
           data: {
@@ -55,66 +49,123 @@ $(document).ready(function() {
             filterProcessing: "1",
             filterRadius: {
               miles: $("#distance option:selected").val(),
-              postalcode: $("#zipCode").val().trim()
-            }
-          }
-        })
-      }).then(function(response) {
+              postalcode: $("#postal-code").val().trim(),
+            },
+          },
+        }),
+      }).then(function (responseOrg) {
         var organizations = {};
-        for (var i = 0; i < response.data.length; i++) {
-          organizations[response.data[i].id] = {
-            name: response.data[i].attributes.name,
-            url: response.data[i].attributes.url
+        for (var i = 0; i < responseOrg.data.length; i++) {
+          organizations[responseOrg.data[i].id] = {
+            name: responseOrg.data[i].attributes.name,
+            url: responseOrg.data[i].attributes.url,
           };
         }
-
-        $("animal-results").html('<h4 class="has-text-centered is-side-3">Results</h4>')
+          console.log(organizations);
+          // console.log(searchAnimalsUrl);
+        $("animal-list")
+          .html('<h3 class="title is-centered is-3">Results</h3>')
           .append('<div class="row">');
-        
-        for (var i = 0; i < result.data.length; i++) {
-          const column = $("<div>").addClass("column-is-4").attr("id", "animalCard");
-          const title = $("<h2>").addClass("card-title has-text-weight-bold is-size-5").text(result.data[i].attributes.name);
-          const card = $("<div>").addClass("card has-background-light");
-          const breed = $("<p>").addClass("card-text").text(`Animal Breed: ${result.data[i].attributes.breedString}`);
-          const sex = $("<p>").addClass("card-text").text(`Sex: ${result.data[i].attributes.sex}`);
-          const distance = $("<p>").addClass("card-text").text(`Distance: ${result.data[i].attributes.distance} miles`);
-          const organizationName = $("<p>").addClass("card-text").text(`Organization/Rescue: ${organizations[result.data[i].relationships.organizations.data[0].id].name}`);
-          const organizationUrl = $("<a>").addClass("card-text").text(organizations[result.data[i].relationships.organizations.data[0].id].url).attr("href", organizations[result.data[i].relationships.organizations.data[0].id].url);
-          const animalImg = $("<img>").addClass("image is-128x128").attr("src", result.data[i].attributes.pictureThumbnailUrl);
-          const body = $("<div>").addClass("card-body");
+    
+        for (var i = 0; i < responseOrg.data.length; i++) {
+          const column = $("<div>")
+            .addClass("column is-8")
+            .attr("id", "animalCard");
+          const card = $("<div>").addClass("card");
+          const cardContent = $("<div>").addClass("card-content");
+          const name = $("<h2>")
+            .addClass("card-header-title is-centered")
+            .text(responseOrg.data[i].attributes.name);
 
-          col.append(card.append(body.append(title, animalImg, breed, sex, distance, organizationName, organizationUrl)));
+            // console.log(name);
 
-          $("#animal-results .row").append(col);
+          const breed = $("<p>")
+            .addClass("card-content")
+            .text("Animal Breed: " + responseAnimal.data[i].attributes.breedString);
+           
+
+          const organizationName = $("<p>")
+            .addClass("card-content")
+            .text(
+              "Organization/Rescue: " + 
+              responseOrg.data[i].attributes.name
+              );
+
+              // console.log(organizationName);
+
+          const organizationUrl = $("<a>")
+            .addClass("card-content")
+            .text(
+              "Website: " +
+                responseOrg.data[i].attributes.url)
+            .attr(
+              "href",
+              responseOrg.data[i].attributes.url
+            );
+
+            // console.log(organizationUrl);
+
+          const sex = $("<p>")
+            .addClass("card-content")
+            .text("Sex: " + responseAnimal.data[i].attributes.sex);
+
+            // console.log(sex);
+          const distance = $("<p>")
+            .addClass("card-content")
+            .text(
+              "Distance: " +
+                responseAnimal.data[i].attributes.distance +
+                " miles away from " +
+                responseAnimal.data[i].attributes.postalcode
+            );
+          const animalImg = $("<img>")
+            .addClass("card-image is-square")
+            .attr("src", responseAnimal.data[i].attributes.pictureThumbnailUrl);
+
+          // card.append(name);
+          // column.append(card);
+            cardContent.append(name,
+              breed,
+              organizationName,
+              organizationUrl,
+              sex,
+              distance,
+              animalImg);
+
+              card.append(cardContent);
+                column.append(card);
+                
+
+          $("#animal-list").append(column);
         }
       });
     });
   });
 });
 
-var searchTerms = function() {
-  var searchTermSpecies = document.querySelector('#searchTermSpecies').value;
-  // create variable to hold value of species
-  var species = document.querySelector('#species').value;
-  fetch(
-    'https://test1-api.rescuegroups.org/v5/public/animals/species/search?=' +
-    searchTermSpecies +
-    '&fields[species]='
-  )
-}
+// var searchTerms = function () {
+//   var searchTermSpecies = document.querySelector("#searchTermSpecies").value;
+//   // create variable to hold value of species
+//   var species = document.querySelector("#species").value;
+//   fetch(
+//     "https://test1-api.rescuegroups.org/v5/public/animals/species/search?=" +
+//       searchTermSpecies +
+//       "&fields[species]="
+//   );
+// };
 
-var url = 'https://test1-api.rescuegroups.org/v5/public/animals/species/'
+var url = "https://test1-api.rescuegroups.org/v5/public/animals/species/";
 $.ajax({
   url: url,
-  method: 'GET',
-  dataType: 'JSON',
-  data: {
-    'api-key': '2p3gpOLU'
+  method: "GET",
+  contentType: "application/json",
+  headers: {
+    Authorization: "2p3gpOLU",
   },
-  success: function(data) {
+  success: function (data) {
     console.log(data);
   },
-  error: function(err) {
-    console.log('error:' + err);
-  }
+  error: function (err) {
+    console.log("error:" + err);
+  },
 });
