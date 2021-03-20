@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
   $("#submit").on("click", function () {
-    var searchAnimalsUrl =
+    var searchAnimalsUrl1 =
       "https://api.rescuegroups.org/v5/public/animals/search/available/haspic?include=locations,orgs";
 
     $.ajax({
-      url: searchAnimalsUrl,
+      url: searchAnimalsUrl1,
       method: "GET",
       contentType: "application/json",
       headers: {
@@ -15,20 +15,35 @@ $(document).ready(function () {
         data: {
           filters: [
             {
-              fieldName: "species.singular",
-              operation: "equals",
-              criteria: $("#species option:selected"),
-            },
-            {
               fieldName: "statuses.name",
               operation: "equals",
               criteria: "Available",
             },
+            {
+              fieldName: "animalSpecies.singular",
+              operation: "equals",
+              criteria: $("#species option:selected"),
+            },
+            {
+              fieldName: "species.singular",
+              operation: "equals",
+              criteria: $("#sex option:selected"),
+            },
+            {
+              fieldName: "orgLocationDistance",
+              operation: "radius",
+              criteria: $("#distance option:selected").val(),
+            },
+            {
+              fieldName: "orgLocation",
+              operation: "equals",
+              criteria: $("#postal-code").val().trim(),
+            },
           ],
-          filterRadius: {
-            miles: $("#distance option:selected").val(),
-            postalcode: $("#postal-code").val().trim(),
-          },
+          // filterRadius: {
+          //   miles: $("#distance option:selected").val(),
+          //   postalcode: $("#postal-code").val().trim(),
+          // },
         },
       }),
     }).then(function (responseAnimal) {
@@ -68,23 +83,23 @@ $(document).ready(function () {
           .append('<div class="row">');
     
         for (var i = 0; i < responseOrg.data.length; i++) {
-          const column = $("<div>")
+          let column = $("<div>")
             .addClass("column is-8")
             .attr("id", "animalCard");
-          const card = $("<div>").addClass("card");
-          const cardContent = $("<div>").addClass("card-content");
-          const name = $("<h2>")
+          let card = $("<div>").addClass("card");
+          let cardContent = $("<div>").addClass("card-content");
+          let name = $("<h2>")
             .addClass("card-header-title is-centered")
             .text(responseOrg.data[i].attributes.name);
 
             // console.log(name);
 
-          const breed = $("<p>")
+          let breed = $("<p>")
             .addClass("card-content")
             .text("Animal Breed: " + responseAnimal.data[i].attributes.breedString);
            
 
-          const organizationName = $("<p>")
+          let organizationName = $("<p>")
             .addClass("card-content")
             .text(
               "Organization/Rescue: " + 
@@ -93,7 +108,7 @@ $(document).ready(function () {
 
               // console.log(organizationName);
 
-          const organizationUrl = $("<a>")
+          let organizationUrl = $("<a>")
             .addClass("card-content")
             .text(
               "Website: " +
@@ -105,12 +120,12 @@ $(document).ready(function () {
 
             // console.log(organizationUrl);
 
-          const sex = $("<p>")
+          let sex = $("<p>")
             .addClass("card-content")
             .text("Sex: " + responseAnimal.data[i].attributes.sex);
 
             // console.log(sex);
-          const distance = $("<p>")
+          let distance = $("<p>")
             .addClass("card-content")
             .text(
               "Distance: " +
@@ -118,7 +133,8 @@ $(document).ready(function () {
                 " miles away from " +
                 responseAnimal.data[i].attributes.postalcode
             );
-          const animalImg = $("<img>")
+            console.log(distance);
+          let animalImg = $("<img>")
             .addClass("card-image is-square")
             .attr("src", responseAnimal.data[i].attributes.pictureThumbnailUrl);
 
