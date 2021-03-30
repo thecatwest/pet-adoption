@@ -65,8 +65,9 @@ Features:
 ## Issues for Future Improvements
 <p>
 
-* Unable to successfully apply search criteria: I (Cat Westover) was unable to apply search criteria successfully, and therefore the search returns the same array of animals.
+* Unable to successfully apply search criteria: CW was unable to apply search criteria successfully, and therefore the search returns the same array of animals.
 
 * Unable to uniquely identify individual pet buttons on click events, causing the click event to occur on each button on the page.
+* Button to retrieve saved pet data currently does not link to Saved Pets page; user must use navigation bar at top of page.
 
 <h4 class="text-dark">&copy; 2021 by S. Kiprotich, H. Montano, & C. Westover</h4>
