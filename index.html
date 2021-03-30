@@ -33,21 +33,9 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item"> Home </a>
+          <a class="navbar-item" href="./index.html"> Home </a>
 
-          <a class="navbar-item"> Available Pets </a>
-
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link"> Organizations </a>
-
-            <div class="navbar-dropdown">
-              <a class="navbar-item"> About </a>
-              <a class="navbar-item"> Jobs </a>
-              <a class="navbar-item"> Contact </a>
-              <hr class="navbar-divider" />
-              <a class="navbar-item"> Report an issue </a>
-            </div>
-          </div>
+          <a class="navbar-item" href="./pets.html"> Saved Pets </a>
         </div>
 
         <div class="navbar-end">
@@ -58,49 +46,21 @@
 
     <section class="hero is-medium is-primary">
       <div class="hero-body">
-        <p class="title">Pet Adoption Portal</p>
-        <p class="subtitle">
+        <div class="container">
+          <div id="image"></div>
+        </div>
+        <p class="title has-text-centered">Pet Adoption Portal</p>
+        <p class="subtitle has-text-centered">
           Your One Place Stop to Find Your Next Best Friend!
         </p>
       </div>
     </section>
 
     <div class="columns top-margin">
-      <div class="column"></div>
       <div class="column">
+      <div class="column is-half is-offset-one-quarter">
         <div class="field">
-          <!-- <label class="label">Species</label>
-                    <div class="control">
-                        <div id="species" class="select is-primary">
-                            <select>
-                                <option value="Alpaca">Alpaca</option>
-                                <option value="Bird">Bird</option>
-                                <option value="Cat">Cat</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Chinchilla">Chinchilla</option>
-                                <option value="Cow">Cow</option>
-                                <option value="Degu">Degu</option>
-                                <option value="Dog">Dog</option>
-                                <option value="Donkey">Donkey</option>
-                                <option value="Duck">Duck</option>
-                                <option value="Ferret">Ferret</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Frog">Frog</option>
-                                <option value="Gecko">Gecko</option>
-                                <option value="Gerbil">Gerbil</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Goose">Goose</option>
-                                <option value="Groundhog">Groundhog</option>
-                                <option value="Guinea Pig">Guinea Pig</option>
-                                <option value="Hamster">Hamster</option>
-                                <option value="Hedgehog">Hedgehog</option>
-                                <option value="Horse">Horse</option>
-                                <option value="Iguana">Iguana</option>
-                                <option value="Lizard">Lizard</option>
-                            </select>
-                        </div>
-                    </div>
-                </div> -->
+          
           <!-- animal search form -->
           <div class="field">
             <form>
@@ -108,51 +68,29 @@
               <input
                 type="text"
                 id="species"
-                class="input is-primary"
+                class="input is-warning"
                 name="species"
-                placeholder="cat, dog, bird, degu, lizard, etc..."
+                placeholder="cat, dog, etc..."
               /><br />
-              <!-- radio buttons for sex -->
-              <div class="control label">
-                <input 
-                    type="radio" 
-                    id="sex" 
-                    name="sex" 
-                    value="male" />
-                <label 
-                    for="male" 
-                    class="radio">
-                    Male
-                </label>
-                <br />
-                <input 
-                type="radio" 
-                id="sex" name="sex" 
-                value="female" />
-                <label 
-                for="female">
-                Female
-                </label>
-                <br />
-              </div>
             </form>
 
+            <!-- zip code radius search -->
             <div class="field">
               <label class="label">Zip Code</label>
               <div class="control is-expanded">
                 <input
                   id="postal-code"
-                  class="input is-primary"
+                  class="input is-warning"
                   type="text"
                   placeholder="Enter your 5-digit zip code"
                 />
               </div>
             </div>
-
+        
             <div class="field">
               <label class="label">Distance (miles)</label>
               <div class="control">
-                <div id="distance" class="select is-primary">
+                <div id="distance" class="select is-warning">
                   <select>
                     <option selected value="5">5</option>
                     <option value="10">10</option>
@@ -165,61 +103,49 @@
               </div>
             </div>
           </div>
+          <!-- search form submit -->
           <div class="field is-grouped is-grouped-centered">
             <div class="control">
-              <button id="submit" class="button is-primary" type="submit">
+              <button id="submit" class="button is-warning" type="search" name="animalSearch">
                 Submit
               </button>
             </div>
           </div>
         </div>
-        <div id="animal-list"></div>
+        <div class="container">
+          <div class="columns">
+              <div class="column">
+  
+              </div>
+              <div class="column">
+  
+              </div>
+              <div class="column">
+  
+              </div>
+              <div class="column">
+  
+              </div>
+          </div>
+      </div>
+      
+  
+      <div id="animal-list">
       </div>
 
-      <!-- <div class="tile is-parent container is-fluid">
-          <article class="tile is-child notification is-info">
-            <p class="title">Middle tile</p>
-            <p class="subtitle">With an image</p>
-            <figure class="image is-4by3">
-              <img src="https://bulma.io/images/placeholders/640x480.png">
-            </figure>
-          </article>
-          </div>
-          
-          
-          <div class="tile is-parent container is-fluid">
-            <article class="tile is-child notification is-info">
-              <p class="title">Middle tile</p>
-              <p class="subtitle">With an image</p>
-              <figure class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/640x480.png">
-              </figure>
-            </article>
-        </div>
-        <div class="tile is-parent container is-fluid">
-          <article class="tile is-child notification is-info">
-            <p class="title">Middle tile</p>
-            <p class="subtitle">With an image</p>
-            <figure class="image is-4by3">
-              <img src="https://bulma.io/images/placeholders/640x480.png">
-            </figure>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-info">
-            <p class="title">Middle tile</p>
-            <p class="subtitle">With an image</p>
-            <figure class="image is-4by3">
-              <img src="https://bulma.io/images/placeholders/640x480.png">
-            </figure>
-          </article>
-      </div> -->
+        <div id="animalSaved"></div>
+        <div id="animalMap"></div>
+      </div>
     </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script
+    <!-- <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFyaj8CIVszCwrhgrGr4HyMXmTlQ-V3cA&callback=initMap&libraries=&v=weekly"
+      async></script>
+      <script
       src="https://kit.fontawesome.com/1223513c02.js"
       crossorigin="anonymous"
-    ></script>
-    <script src="./assets/js/script.js"></script>
+  ></script> -->
+  <script src="./assets/js/script.js"></script>
   </body>
 </html>
